@@ -10,7 +10,8 @@ module.exports = (mongoose) => {
     }
   );
   //mengubah struktur schema default ke object yng diinginkan
-  schema.method("toJSON", () => {
+  //jika menggunaka errow function maka toObject akan error
+  schema.method("toJSON", function () {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
