@@ -21,8 +21,12 @@ db.mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+//import route cara 1
 const { contoh, postRoute } = require("./app/routes");
-app.use("/api/", contoh, postRoute);
+app.use("/api", contoh, postRoute);
+
+// import route cara 2
+require("./app/routes/post.routescara2")(app);
 
 app.use("/", (req, res) => {
   res.send({
