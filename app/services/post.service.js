@@ -44,6 +44,29 @@ const postService = {
       console.log(err);
     }
   },
+  findOneService: async (id) => {
+    try {
+      let error = null;
+      let result = {};
+      if (id) {
+        const findData = await Post.findById(id);
+        if (findData.length === 0) {
+          error = "NO DATA";
+        } else {
+          result = findData;
+        }
+      } else {
+        error = "INVALID ID";
+      }
+
+      return {
+        dataService: result,
+        error,
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };
 
 module.exports = postService;
