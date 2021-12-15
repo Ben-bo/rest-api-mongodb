@@ -100,6 +100,35 @@ const postService = {
       console.log(err);
     }
   },
+  deleteService: async (id) => {
+    try {
+      let error = null;
+      let result = {};
+      const validId = objectID.isValid(id);
+      if (validId) {
+        const cekData = await Post.findById(id);
+        if (cekData) {
+          const deleteData = await Post.deleteOne({ _id: id });
+          if (deleteData) {
+            const getData = await Post.find();
+            result = getData;
+          } else {
+            error = "Failed";
+          }
+        } else {
+          error = "id tidak ditemukan";
+        }
+      } else {
+        error = "INVALID ID";
+      }
+      return {
+        dataService: result,
+        error,
+      };
+    } catch (error) {
+      console.log("error get data:", error);
+    }
+  },
 };
 
 module.exports = postService;
