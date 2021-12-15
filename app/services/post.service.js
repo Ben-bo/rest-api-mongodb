@@ -1,4 +1,5 @@
 const db = require("../models");
+const objectID = require("mongodb").ObjectId;
 const Post = db.posts;
 const postService = {
   getAllService: async () => {
@@ -48,10 +49,13 @@ const postService = {
     try {
       let error = null;
       let result = {};
-      if (id) {
+      //cek id valid atau tidak
+      const validId = objectID.isValid(id);
+      if (validId) {
         const findData = await Post.findById(id);
-        if (findData.length === 0) {
-          error = "NO DATA";
+
+        if (!findData) {
+          error = "ID : " + id + " NOT FOUND";
         } else {
           result = findData;
         }
@@ -64,6 +68,35 @@ const postService = {
         error,
       };
     } catch (err) {
+      console.log(err);
+    }
+  },
+  updateService: async (id, payload) => {
+    try {
+      let error = null;
+      let result = {};
+      const validId = objectID.isValid(id);
+      if (validId) {
+        const filter = { _id: id };
+        const update = {
+          title: payload.title,
+          body: payload.body,
+          isPublished: payload.isPublished ? payload.isPublished : false,
+        };
+        const updateData = await Post.updateOne(filter, update);
+        if (updateData) {
+          result = updateData;
+        } else {
+          error = "gagal Update";
+        }
+      } else {
+        error = "INVALID ID";
+      }
+      return {
+        dataService: result,
+        error,
+      };
+    } catch (error) {
       console.log(err);
     }
   },

@@ -53,3 +53,23 @@ exports.findOne = async (req, res) => {
     console.log("error get data:", error);
   }
 };
+
+exports.update = async (req, res) => {
+  try {
+    let status = 200;
+    let message = "success";
+    const id = req.params.id;
+    const { dataService, error } = await postService.updateService(
+      id,
+      req.body
+    );
+    if (error !== null) {
+      (status = 500), (message = error);
+    }
+    res.status(status).send({
+      Status: status,
+      Message: message,
+      RowEffected: dataService.modifiedCount,
+    });
+  } catch (error) {}
+};

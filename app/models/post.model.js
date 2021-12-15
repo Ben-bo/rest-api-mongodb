@@ -1,7 +1,9 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      title: String,
+      title: {
+        type: String,
+      },
       body: String,
       isPublished: Boolean,
     },
