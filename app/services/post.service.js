@@ -19,6 +19,7 @@ const postService = {
       };
     } catch (err) {
       console.log(err);
+      return err;
     }
   },
   createService: async (payload) => {
@@ -43,6 +44,7 @@ const postService = {
       };
     } catch (err) {
       console.log(err);
+      return err;
     }
   },
   findOneService: async (id) => {
@@ -69,6 +71,7 @@ const postService = {
       };
     } catch (err) {
       console.log(err);
+      return err;
     }
   },
   updateService: async (id, payload) => {
@@ -98,6 +101,7 @@ const postService = {
       };
     } catch (error) {
       console.log(err);
+      return err;
     }
   },
   deleteService: async (id) => {
@@ -127,6 +131,7 @@ const postService = {
       };
     } catch (error) {
       console.log("error get data:", error);
+      return err;
     }
   },
 };
